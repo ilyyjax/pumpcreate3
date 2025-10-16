@@ -1,0 +1,211 @@
+:root{
+  --bg1: #f8efe6;
+  --bg2: #fff6ea;
+  --accent: #ff8c2b;
+  --accent-dark: #c55f15;
+  --muted: #6b4f2a;
+  --card: rgba(255,255,255,0.6);
+  --glass: rgba(255,255,255,0.12);
+  --shadow: 0 8px 24px rgba(15,10,5,0.12);
+  --radius: 14px;
+  --transition: 280ms cubic-bezier(.2,.9,.3,1);
+  font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  background: linear-gradient(180deg, #fff9f2 0%, #f5efe8 50%, #efe6da 100%);
+  color:#3f2d1f;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  display:flex;
+  flex-direction:column;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* Topbar */
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:12px 18px;
+  gap:12px;
+  background:linear-gradient(90deg, rgba(255,255,255,0.6), rgba(255,250,240,0.4));
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid rgba(200,160,110,0.12);
+  box-shadow: var(--shadow);
+  position:sticky;
+  top:0;
+  z-index:40;
+}
+.logo{font-family:'Fredoka One', 'Poppins'; font-size:20px; display:flex; align-items:center; gap:8px}
+.logo span{font-weight:600; color:var(--muted)}
+.top-actions{display:flex; align-items:center; gap:10px}
+.btn{
+  border: none;
+  background:transparent;
+  padding:8px 12px;
+  border-radius:10px;
+  font-weight:600;
+  cursor:pointer;
+  transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+  box-shadow:none;
+}
+.btn:hover{ transform: translateY(-4px); box-shadow: 0 8px 18px rgba(0,0,0,0.08)}
+.btn.primary{ background: linear-gradient(90deg,var(--accent), #ffb66b); color:white; box-shadow: 0 6px 16px rgba(197,90,26,0.16)}
+.btn.ghost{ background:transparent; border:1px solid rgba(100,60,20,0.06); padding:10px 14px}
+.sound-toggle{ font-size:14px; color:#5a3f2a}
+
+/* Layout */
+.wrap{
+  display:flex;
+  gap:18px;
+  padding:22px;
+  align-items:flex-start;
+  flex:1;
+  max-width:1200px;
+  margin: 0 auto;
+  width:100%;
+}
+
+/* canvas area */
+.canvas-area{
+  flex:1.15;
+  min-width:280px;
+}
+.scene{
+  position:relative;
+  height:66vh;
+  min-height:420px;
+  border-radius:18px;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:28px;
+  background: linear-gradient(180deg, rgba(255,248,240,0.6), rgba(255,242,230,0.4));
+  box-shadow: var(--shadow);
+}
+
+/* background variants */
+#backgroundLayer{
+  position:absolute;
+  inset:0;
+  z-index:2;
+  transition: background 400ms var(--transition);
+  pointer-events:none;
+}
+/* autumn, night, spooky, cream */
+#backgroundLayer.autumn{
+  background: radial-gradient(ellipse at 10% 20%, rgba(255,245,230,0.6), rgba(255,236,207,0.2)), linear-gradient(180deg, #fffbf6 0%, #fff2e2 100%);
+  background-size:cover;
+}
+#backgroundLayer.night{
+  background: linear-gradient(180deg,#0b1220 0%, #162235 60%, #1a2740 100%);
+}
+#backgroundLayer.spooky{
+  background: linear-gradient(180deg,#241827 0%, #3b2b37 70%);
+}
+
+/* floating leaf particles (simple decorative layer) */
+.leaf-layer{
+  position:absolute; inset:0; z-index:5; pointer-events:none;
+  background-image:
+    radial-gradient(circle at 2% 10%, rgba(205,141,52,0.12) 0 4px, transparent 6px),
+    radial-gradient(circle at 85% 20%, rgba(198,92,21,0.10) 0 4px, transparent 6px),
+    radial-gradient(circle at 40% 70%, rgba(215,164,85,0.09) 0 5px, transparent 7px);
+  animation: leavesDrift 12s linear infinite;
+  opacity:0.95;
+}
+@keyframes leavesDrift { 0%{transform:translateY(-5%)} 100%{transform:translateY(5%)} }
+
+/* pumpkin card */
+.pumpkin-card{
+  width:420px;
+  max-width:78vmin;
+  height:420px;
+  border-radius:20px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04));
+  display:flex; align-items:center; justify-content:center;
+  padding:12px;
+  z-index:10;
+  transform-origin:center;
+  filter: drop-shadow(0 14px 36px rgba(0,0,0,0.12));
+  transition: transform 350ms var(--transition);
+  animation: floatPumpkin 6s ease-in-out infinite;
+}
+.pumpkin-card:hover{ transform: translateY(-6px) scale(1.02) }
+
+/* floating */
+@keyframes floatPumpkin{
+  0%{ transform:translateY(0) }
+  50%{ transform:translateY(-8px) }
+  100%{ transform:translateY(0) }
+}
+
+/* controls */
+.controls{
+  width:320px;
+  min-width:260px;
+  background: rgba(255,255,255,0.6);
+  border-radius: var(--radius);
+  padding:14px;
+  box-shadow: var(--shadow);
+  z-index:30;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.tabs{ display:flex; gap:8px; justify-content:space-between}
+.tab{ flex:1; padding:10px; border-radius:10px; border:none; background:transparent; cursor:pointer; font-weight:700; color:var(--muted)}
+.tab.active{ background: linear-gradient(90deg,#fff 0%, rgba(255,247,240,0.6) 100%); box-shadow: 0 6px 18px rgba(0,0,0,0.06) }
+.tab-contents{ padding-top:6px; overflow:auto; max-height:56vh; }
+
+/* option boxes */
+.options{ display:flex; gap:8px; flex-wrap:wrap}
+.options.row{ flex-direction:row}
+.options.wrap{ align-items:flex-start}
+.options .opt{
+  width:66px; height:66px; border-radius:10px; display:flex; align-items:center; justify-content:center;
+  background:linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+  border: 1px solid rgba(150,110,60,0.06); cursor:pointer; transition: transform var(--transition), box-shadow var(--transition);
+  overflow:hidden;
+}
+.options .opt:hover{ transform: translateY(-6px) }
+.options .opt.active{ outline:3px solid rgba(255,140,43,0.14); transform: translateY(-4px) scale(1.03) }
+
+/* small svgs inside options */
+.options svg{ width:46px; height:46px; display:block }
+
+/* controls footer */
+.controls-foot{ display:flex; gap:8px; justify-content:space-between; padding-top:6px; }
+
+/* footer */
+.site-foot{ text-align:center; padding:16px; color:#8a6b48; font-size:13px; opacity:0.9 }
+
+/* responsive behavior */
+@media (max-width:980px){
+  .wrap{ flex-direction:column; padding:16px; }
+  .controls{ width:100%; order:2; }
+  .canvas-area{ order:1; width:100% }
+  .pumpkin-card{ width:86vw; height:86vw; max-width:460px; max-height:460px }
+}
+
+/* night scene stars (applied when backgroundLayer.night) */
+#backgroundLayer.night::after{
+  content:""; position:absolute; inset:0; background-image:
+    radial-gradient(circle at 10% 20%, rgba(255,255,255,0.9) 0 1px, transparent 2px),
+    radial-gradient(circle at 30% 10%, rgba(255,255,255,0.7) 0 1px, transparent 2px),
+    radial-gradient(circle at 80% 30%, rgba(255,255,255,0.6) 0 1px, transparent 2px);
+  opacity:0.6;
+}
+
+/* spooky moon glow */
+#backgroundLayer.spooky::after{
+  content:""; position:absolute; left:12%; top:8%; width:140px; height:140px; border-radius:50%;
+  background: radial-gradient(circle, rgba(255,240,180,0.95), rgba(255,210,120,0.08));
+  mix-blend-mode:screen; opacity:0.9;
+}
