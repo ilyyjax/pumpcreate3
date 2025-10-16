@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>🎃 PumpCreate</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Fredoka+One&display=swap" rel="stylesheet">
+
+  <!-- Icons (optional small icon set) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/7.1.0/collection/components/icon/icon.min.css" integrity="" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo">🎃 <span>PumpCreate</span></div>
+    <nav class="top-actions">
+      <button id="randomBtn" class="btn">Random Pumpkin</button>
+      <button id="downloadBtn" class="btn primary">Download My Pumpkin</button>
+      <div class="sound-toggle">
+        <label>
+          <input type="checkbox" id="soundToggle" />
+          <span>Sound</span>
+        </label>
+      </div>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <section class="canvas-area">
+      <div id="scene" class="scene">
+        <!-- animated leaf particles -->
+        <div class="leaf-layer" aria-hidden="true"></div>
+
+        <!-- Background layer (class changes) -->
+        <div id="backgroundLayer" class="bg autumn"></div>
+
+        <!-- Pumpkin preview (SVG) -->
+        <div id="pumpkinWrapper" class="pumpkin-card" title="Your Pumpkin preview">
+          <!-- subtle glow -->
+          <svg id="pumpkinSVG" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+            <defs>
+              <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="8" result="b" />
+                <feMerge>
+                  <feMergeNode in="b"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+              <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+                <feDropShadow dx="0" dy="10" stdDeviation="12" flood-opacity="0.35"/>
+              </filter>
+            </defs>
+
+            <!-- shadow under pumpkin -->
+            <ellipse cx="300" cy="465" rx="160" ry="38" fill="rgba(0,0,0,0.12)"/>
+
+            <!-- stem -->
+            <g id="stemGroup" transform="translate(300,120)">
+              <path id="stem" d="M-18,0 C-28,-40 28,-40 18,0 C10,20 -10,20 -18,0" transform="translate(0,0)" fill="#6b4f2a" stroke="#402b16"/>
+            </g>
+
+            <!-- pumpkin body (three layered shapes for realism) -->
+            <g id="bodyGroup" transform="translate(0,40)" filter="url(#softGlow)">
+              <path id="pumpOuter" d="M300 120 C430 100 520 230 490 350 C470 440 370 520 300 520 C230 520 130 440 110 350 C80 230 170 100 300 120 Z" fill="#FF8C2B" stroke="#c55f15" stroke-width="6"/>
+              <path id="pumpMid" d="M300 135 C420 125 500 235 480 350 C465 430 375 500 300 500 C225 500 135 430 120 350 C100 235 180 125 300 135 Z" fill-opacity="0.06"/>
+              <path id="pumpRidgeLeft" d="M190 210 C210 230 220 310 200 390" stroke="#c56d2b" stroke-width="12" stroke-linecap="round" fill="none"/>
+              <path id="pumpRidgeRight" d="M410 210 C390 230 380 310 400 390" stroke="#c56d2b" stroke-width="12" stroke-linecap="round" fill="none"/>
+            </g>
+
+            <!-- facial features (groups that will be swapped) -->
+            <g id="faceGroup" transform="translate(0,40)">
+              <!-- Eyes placeholder -->
+              <g id="eyes" transform="translate(0,0)"></g>
+
+              <!-- Nose placeholder -->
+              <g id="nose" transform="translate(0,0)"></g>
+
+              <!-- Mouth placeholder -->
+              <g id="mouth" transform="translate(0,0)"></g>
+            </g>
+
+            <!-- accessories container -->
+            <g id="accessoryGroup" transform="translate(0,0)"></g>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <aside class="controls">
+      <div class="tabs">
+        <button class="tab active" data-tab="face">Face</button>
+        <button class="tab" data-tab="accessories">Accessories</button>
+        <button class="tab" data-tab="color">Color</button>
+        <button class="tab" data-tab="background">Background</button>
+      </div>
+
+      <div class="tab-contents">
+        <div class="tab-pane active" id="face">
+          <h3>Eyes</h3>
+          <div id="eyesOptions" class="options row"></div>
+
+          <h3>Nose</h3>
+          <div id="noseOptions" class="options row"></div>
+
+          <h3>Mouth</h3>
+          <div id="mouthOptions" class="options row"></div>
+        </div>
+
+        <div class="tab-pane" id="accessories">
+          <h3>Accessories</h3>
+          <div id="accessoriesOptions" class="options wrap"></div>
+        </div>
+
+        <div class="tab-pane" id="color">
+          <h3>Pumpkin Color</h3>
+          <div id="colorOptions" class="options row"></div>
+        </div>
+
+        <div class="tab-pane" id="background">
+          <h3>Background</h3>
+          <div id="bgOptions" class="options row"></div>
+        </div>
+      </div>
+
+      <div class="controls-foot">
+        <button id="randomBtn2" class="btn ghost">Surprise Me</button>
+        <button id="downloadBtn2" class="btn primary">Download PNG</button>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="site-foot">
+    <small>© 2025 PumpCreate 🎃 — Made with Autumn Magic.</small>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
